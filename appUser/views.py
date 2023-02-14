@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from .models import *
 
 # Create your views here.
 
@@ -42,7 +43,12 @@ def registerUser(request):
                                                     last_name=surname)
                     user.save()
                     return redirect("loginUser")
-                    
+                else:
+                    context.update({"hata":"Bu Email adresi zaten kullanılıyor!"})
+            else:
+                context.update({"hata": "Bu kullanıcı adı zaten kullanılıyor!"})
+        else:
+            context.update({"hata": "Şifreler aynı değil!"})
     
     return render(request, 'users/register.html', context)
 
@@ -54,4 +60,13 @@ def AccountUser(request):
 
 def profilUser(request):
     context = {}
+    profils = Profil.objects.filter(user=request.user)
+    if request.method == "POST":
+        name = request.POST["name"]
+        image = request.FILES["image"]
+        
+        profil = Profil(name = name, image = image, user=request.user)
+        profil.save()
+        return redirect('profilUser')
+    context.update({"profils": profils})
     return render(request, 'users/browse.html', context)

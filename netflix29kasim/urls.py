@@ -18,10 +18,16 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from appMy.views import *
+from appUser.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index,name="index"),
     path('netflix/', browseIndex, name='browseIndex'),
+    # USER URL
+    path('login/', loginUser, name='loginUser'), # Giriş Yap
+    path('register/', registerUser, name='registerUser'), # Kaydol
+    path('account/', AccountUser, name='AccountUser'),
+    path('profil/', profilUser, name='profilUser'),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

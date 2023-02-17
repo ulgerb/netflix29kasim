@@ -32,10 +32,18 @@
                 <li class="nav-item dropdown" style="margin-right: 100px;">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
+                        
+                        {% if profil %}
+                        <img src="{{ profil.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+                            
+                        {% else %}
                         <img src="{% static 'img/smile-profil.png' %}" alt="">
+                            
+                        {% endif %}
+                            
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">Profil Yönetimi</a></li>
+                        <li><a class="dropdown-item" href="{% url 'profilUser' %}">Profil Yönetimi</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

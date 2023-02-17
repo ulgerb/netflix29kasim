@@ -4,12 +4,12 @@
 
 {% block css %}
     <style>
-        .card img:hover {
-            border: 4px solid white;
+        .card img:hover{
+            box-shadow:  0px 0px 2px 2px white;
         }
         
         button:hover {
-            border: 1px solid white;
+            box-shadow:  0px 0px 2px 2px white;
             color: white !important;
         }
     </style>
@@ -33,14 +33,17 @@
             
             {% for i in profils %}
             <div class="col-3 mt-5 mb-5">
-                <a href="browse-index.html" class="text-decoration-none text-secondary">
+                
                     <div class="card bg-transparent">
-                        <img src="{{ i.image.url }}" class="card-img-top" alt="">
+                        <a href="{% url 'profilUserDelete' i.id %}" class="btn btn-danger" style="position: absolute; right: 0;">X</a>
+                        <a href="{% url 'browseIndex' i.id %}" class="text-decoration-none text-secondary">
+                            <img src="{{ i.image.url }}" class="card-img-top" alt="">
+                        </a>
                         <div>
                             <h5 class="card-title text-center ">{{ i.name }}</h5>
                         </div>
                     </div>
-                </a>
+                
             </div>
             {% endfor %}
                 
@@ -49,7 +52,15 @@
             
 
             <div class="buton mb-5 text-center">
-                <button class="bg-dark text-secondary w-50 p-2 " data-bs-toggle="modal" data-bs-target="#exampleModal">Profil Yönetimi</button>
+                <button class="bg-dark text-secondary w-50 p-2 " {% if max_profils %} disabled {% endif %} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    
+                    {% if max_profils %}
+                        Maximum profil sayısı
+                    {% else %}
+                        Profil Ekle
+                    {% endif %}
+                        
+                </button>
                
                 
                 <!-- Modal -->

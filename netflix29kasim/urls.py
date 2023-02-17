@@ -23,11 +23,13 @@ from appUser.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index,name="index"),
-    path('netflix/', browseIndex, name='browseIndex'),
+    path('netflix/<id>/', browseIndex, name='browseIndex'),
+    path('like/<pid>/<vid>/', likeIndex, name="likeIndex"),
     # USER URL
     path('login/', loginUser, name='loginUser'), # Giriş Yap
     path('register/', registerUser, name='registerUser'), # Kaydol
     path('account/', AccountUser, name='AccountUser'),
-    path('profil/', profilUser, name='profilUser'),
+    path('profil/', profilUser, name='profilUser'), # Profils
+    path('profil-delete/<id>/', profilUserDelete, name="profilUserDelete")
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

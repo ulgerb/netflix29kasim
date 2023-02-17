@@ -61,12 +61,21 @@ def AccountUser(request):
 def profilUser(request):
     context = {}
     profils = Profil.objects.filter(user=request.user)
-    if request.method == "POST":
-        name = request.POST["name"]
-        image = request.FILES["image"]
-        
-        profil = Profil(name = name, image = image, user=request.user)
-        profil.save()
-        return redirect('profilUser')
+    print(len(list(profils)))
+    if not (len(list(profils)) >=4):
+        if request.method == "POST":
+            name = request.POST["name"]
+            image = request.FILES["image"]
+            
+            profil = Profil(name = name, image = image, user=request.user)
+            profil.save()
+            return redirect('profilUser')
+    else:
+        context.update({"max_profils":True})
     context.update({"profils": profils})
     return render(request, 'users/browse.html', context)
+
+def profilUserDelete(request,id):
+    profil = Profil.objects.get(id=id)
+    profil.delete()
+    return redirect('profilUser')
